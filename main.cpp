@@ -10,6 +10,7 @@ using namespace std;
  * Date: 		Created				08:00PM, Monday, 9/18/15
  *				Added menu			11:00PM, Monday, 11/23/15
  *				Added write event	12:00PM, Monday, 12/28/15
+ *				String to num bug	12:00PM, Friday, 6/1/2018
  *
  * Description:
  * Takes in some event information and prints that event.
@@ -27,13 +28,13 @@ using namespace std;
  *
  * Ability to add to and pop off events.
  * 
- * Futher ambitious uptakings:
+ * Further ambitious uptakings:
  * Warnings for when events are coming near.
  * 
  * 
  * Dev NOTES:
- *		-fix string to num stuff
- *		-
+ *		-fix string to num stuff, do we need isNum?
+ *		-fix outfile issues
  *
  *
  */ 
@@ -50,6 +51,7 @@ static void printEvent(Event event) {
 			event.name.c_str(), event.date.c_str(), event.love.c_str(), event.priority.c_str(), event.nerves.c_str());
 }
 
+// BUG : Issue with choosing numbers
 static int isNum(string str) {
 	for (unsigned long i = 0; i < str.length(); ++i) {
 		if (!(str[i] >= '0' && str[i] <= '9')) {
@@ -67,7 +69,7 @@ static int menu() {
 
 	int num = -1;
 	
-	printf("Welcome to the Ultimate Sort Machine!\n\r\n");
+	printf("Welcome to the Ultimate Sort Machine, Saiyuu!\n\r\n");
 	printf("We sort your events and to dos so you don't have\n");
 	printf("to decide what to do next.\n\n");
 	while (1) {
@@ -81,8 +83,8 @@ static int menu() {
 		// Implement for later numbers too.
 		
 		if (input.length() > 2 ||
-			(input[0] >= 'a' && input[0] <='Z') ||
-			(input[1] >= 'a' && input[1] <='Z')) {
+			(input[0] >= '0' && input[0] <='9') ||
+			(input[1] >= '0' && input[1] <='9')) {
 			num = stoi(input);
 		} else {
 			// try again
@@ -91,7 +93,7 @@ static int menu() {
 		if (num != 1 && num != 2) {
 			printf("Please type a number shown above.\n\r");
 		} else if (input == "exit") {
-			printf("Closing the Ultimate Sort Machine!\n\r");
+			printf("Closing Saiyuu!\n\r");
 			exit(0);
 		} else {
 			break;
@@ -119,10 +121,10 @@ int main(int argc, char* argv[]) {
 		printf("How nervous will this make you if you hold off on the event?\n");
 		getline(cin, event.nerves);
 		outfile.open("test.txt");
-		while (!outfile.eof()) {
+		//while (!outfile.eof()) {
 			// get to end of file.
-			outfile;
-		}
+			//outfile;
+		//}
 		outfile << event.name << "\n";
 		//outfile << event.date << "\n";
 		//outfile << event.love << "\n";
